@@ -1,0 +1,9 @@
+button {
+    margin-right: 10px;
+  }
+
+  .title {
+    color: #535bf2; /* Color de relleno */
+    text-shadow: -1px 0 rgb(202, 202, 20), 0 1px  rgb(202, 202, 20), 1px 0  rgb(202, 202, 20), 0 -1px  rgb(202, 202, 20); /* Borde de color */
+    font-weight: bold;
+  }
