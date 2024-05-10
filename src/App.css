@@ -62,3 +62,42 @@
   color: #554f78;
   text-decoration: none;
 }
+
+.button-disabled {
+  background-color: grey !important;
+  cursor: not-allowed !important;
+}
+
+.modal {
+  background-color: #646cffaa; /* Cambia esto al color que quieras */
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;/* Cambia el color del texto a blanco para que sea visible contra el fondo oscuro */
+}
+
+.hidden {
+  display: none;
+}
+
+.close {
+  margin-top: auto;
+}
+
+.record-container {
+  display: flex;
+  justify-content: space-between; /* Añade espacio entre el párrafo y la imagen */
+}
+.medalla{
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+.info-button{
+  margin-top:10px;
+}
+
+.recordText{
+  margin-top:10px;
+}
