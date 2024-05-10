@@ -194,6 +194,8 @@ function App() {
             <h1>Información</h1>
             <p>El objetivo del juego es adivinar el Pokémon. Por cada acierto se sumará 1 a tu récord. </p>
             <p>Además, puedes utilizar los puntos obtenidos para canjearlos por pistas. Revelar una letra cuesta 1 punto y revelar la palabra entera cuesta 8 </p>
+            <p>Puedes darle al título para volver a seleccionar Generación</p>
+            <b>¡Buena suerte!</b>
             <button className="close" onClick={() => setInfoOpen(false)}>
               Cerrar
             </button>
