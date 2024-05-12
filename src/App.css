@@ -7,6 +7,14 @@
   margin: 0;
   padding: 0;
 }
+.record-text {
+  color: white;
+  margin-top:10px; /* Cambia esto al color que desees para "Record" */
+}
+
+.pistas-text {
+  color: white; /* Cambia esto al color que desees para "Pistas" */
+}
 
 .app-container {
   display: flex;

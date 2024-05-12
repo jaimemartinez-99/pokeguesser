@@ -189,10 +189,10 @@ function App() {
         />
         <button className="submit-button" type="submit">Enviar</button>
       </form>
-      <b>Record: {record}</b>
+      <b className="record-text">Record: {record}</b>
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
       <div className="pistas">
-        <h3>Pistas</h3>
+        <h3 className="pistas-text">Pistas</h3>
         <button className={`ayuda ${record < 1 ? 'button-disabled' : ''}`} onClick={handleRevealLetterClick} title="Coste: 1 punto">
           Revelar letra
         </button>
