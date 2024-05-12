@@ -46,7 +46,7 @@ function App() {
   const [pokemonData, setPokemonData] = useState(null);
   const [userInput, setUserInput] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [record, setRecord] = useState(100);
+  const [record, setRecord] = useState(0);
   const [maxNumber, setMaxNumber] = useState(getMaxNumber(localStorage.getItem('maxValue')));
   const [revealedLetters, setRevealedLetters] = useState('');
   const [infoOpen, setInfoOpen] = useState(false);
