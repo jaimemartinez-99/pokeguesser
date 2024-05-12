@@ -1,5 +1,6 @@
 button {
     margin-right: 10px;
+    margin-top: 10px;
     background-size: cover; /* Asegura que la imagen cubra todo el botón */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     font-weight: 800;
@@ -23,8 +24,9 @@ button {
   
 }
 
-.botones{
+.botones {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en múltiples líneas */
   margin-top: 20px;
 }
