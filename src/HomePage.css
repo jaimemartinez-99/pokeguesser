@@ -1,9 +1,15 @@
 button {
     margin-right: 10px;
-  }
+    background-size: cover; /* Asegura que la imagen cubra todo el botón */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    font-weight: 800;
+}
+
+
 
   .title {
     color: #535bf2; /* Color de relleno */
     text-shadow: -1px 0 rgb(202, 202, 20), 0 1px  rgb(202, 202, 20), 1px 0  rgb(202, 202, 20), 0 -1px  rgb(202, 202, 20); /* Borde de color */
     font-weight: bold;
+    text-align: center;
   }

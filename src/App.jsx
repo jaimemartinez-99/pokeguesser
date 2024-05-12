@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
@@ -46,12 +46,14 @@ function App() {
   const [pokemonData, setPokemonData] = useState(null);
   const [userInput, setUserInput] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [record, setRecord] = useState(0);
+  const [record, setRecord] = useState(100);
   const [maxNumber, setMaxNumber] = useState(getMaxNumber(localStorage.getItem('maxValue')));
   const [revealedLetters, setRevealedLetters] = useState('');
   const [infoOpen, setInfoOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [displayRecord, setDisplayRecord] = useState(0);
+  const [revealLetterCount, setRevealLetterCount] = useState(0);
+  const [lastPokemon, setLastPokemon] = useState('');
   const location = useLocation();
 
   let medalla;
@@ -72,7 +74,13 @@ function App() {
   } else if (displayRecord >= 18) {
     medalla = medalla8;
   }
+  const inputRef = useRef(null);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const closeModal = () => setOpen(false);
 
@@ -108,6 +116,7 @@ function App() {
       setRecord(record + 1);
       setDisplayRecord(record + 1);  // Se incrementa el récord en 1
       setUserInput('');
+      setRevealLetterCount(0);
       setRevealedLetters(''); // Borrar las letras reveladas
       fetchPokemon();
     } else {
@@ -117,17 +126,34 @@ function App() {
       setSuccessMessage('');
       setUserInput('');
       setRevealedLetters(''); // Borrar las letras reveladas
+      setLastPokemon(pokemonData.name);
       fetchPokemon();// Se muestra una alerta
     }
   };
 
   const handleRevealLetterClick = () => {
     if (pokemonData && revealedLetters.length < pokemonData.name.length) {
-      if (record >= 1) {
-        const newRevealedLetters = revealedLetters + pokemonData.name.charAt(revealedLetters.length);
-        setRevealedLetters(newRevealedLetters);
-        setUserInput(userInput.substring(0, newRevealedLetters.length - 1) + pokemonData.name.charAt(newRevealedLetters.length - 1).toUpperCase() + userInput.substring(newRevealedLetters.length));
-        setRecord(record - 1);
+      const cost = 1 + revealLetterCount;
+      if (record >= cost) {
+        const pokemonName = pokemonData.name.toLowerCase();
+        let nextLetterToReveal = '';
+        let i;
+      
+        for (i = 0; i < pokemonName.length; i++) {
+          if (pokemonName[i] !== userInput[i]) {
+            nextLetterToReveal = pokemonName[i];
+            break;
+          }
+        }
+      
+        if (nextLetterToReveal) {
+          // Si la letra en la posición que se va a revelar no coincide con la letra del usuario, la reemplaza
+          if (userInput[i] !== nextLetterToReveal) {
+            setUserInput(userInput.slice(0, i) + nextLetterToReveal + userInput.slice(i + 1));
+          }
+          setRecord(record - cost);
+          setRevealLetterCount(revealLetterCount + 1);
+        }
       } else {
         alert('No tienes suficientes puntos para revelar una letra');
       }
@@ -155,6 +181,7 @@ function App() {
       )}
       <form onSubmit={handleSubmit}>
         <input
+          ref={inputRef}
           type="text"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
@@ -175,6 +202,7 @@ function App() {
         <Popup open={open} closeOnDocumentClick onClose={closeModal}>
           <div className="modal">
             <h1>¡Has Perdido!</h1>
+            <p>El Pokémon era: {lastPokemon.charAt(0).toUpperCase() + lastPokemon.slice(1)}</p>
             <div className="record-container">
               <b className='recordText'>Tu record final es: {displayRecord}</b>
               <img className="medalla" src={medalla} alt="Record" />
@@ -192,10 +220,12 @@ function App() {
         <Popup open={infoOpen} closeOnDocumentClick onClose={() => setInfoOpen(false)}>
           <div className="modal">
             <h1>Información</h1>
-            <p>El objetivo del juego es adivinar el Pokémon. Por cada acierto se sumará 1 a tu récord. </p>
-            <p>Además, puedes utilizar los puntos obtenidos para canjearlos por pistas. Revelar una letra cuesta 1 punto y revelar la palabra entera cuesta 8 </p>
-            <p>Puedes darle al título para volver a seleccionar Generación</p>
-            <b>¡Buena suerte!</b>
+            <p> El objetivo del juego es adivinar el Pokémon. Por cada acierto se sumará 1 a tu récord. </p>
+            <p> Además, puedes utilizar los puntos obtenidos para canjearlos por pistas. </p> 
+            <p> Revelar una letra cuesta 1 punto y revelar la palabra entera cuesta 8. </p>  
+            <p> Puedes darle al título para volver a seleccionar Generación</p>
+            <b> ¡Buena suerte!</b>
+            <p></p>
             <button className="close" onClick={() => setInfoOpen(false)}>
               Cerrar
             </button>
